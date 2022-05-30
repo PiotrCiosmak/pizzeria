@@ -11,7 +11,7 @@
  Target Server Version : 100607
  File Encoding         : 65001
 
- Date: 28/05/2022 00:36:44
+ Date: 30/05/2022 21:19:28
 */
 
 SET NAMES utf8mb4;
@@ -30,7 +30,7 @@ CREATE TABLE `accounts`  (
   PRIMARY KEY (`id_account`) USING BTREE,
   INDEX `id_user`(`id_user`) USING BTREE,
   CONSTRAINT `accounts_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 42 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 43 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of accounts
@@ -67,6 +67,7 @@ INSERT INTO `accounts` VALUES (38, 'karolniezielski', 'dasudaus2', '2022-05-24 2
 INSERT INTO `accounts` VALUES (39, 'piotrparada', 'da9sd9a', '2022-05-24 21:47:59', 46);
 INSERT INTO `accounts` VALUES (40, 'czarekniedola', 'hdsah8da', '2022-05-24 21:49:05', 47);
 INSERT INTO `accounts` VALUES (41, 'karolponiedziałek', 'dausdg6w2', '2022-05-24 21:51:33', 48);
+INSERT INTO `accounts` VALUES (42, 'kamilaborsuk', 'dasd8da', '2022-05-29 13:30:56', 49);
 
 -- ----------------------------
 -- Table structure for active_adresses
@@ -109,7 +110,7 @@ CREATE TABLE `customers`  (
   PRIMARY KEY (`id_customer`) USING BTREE,
   INDEX `id_user`(`id_user`) USING BTREE,
   CONSTRAINT `customers_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1003 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1004 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of customers
@@ -132,6 +133,7 @@ INSERT INTO `customers` VALUES (16, 34);
 INSERT INTO `customers` VALUES (17, 35);
 INSERT INTO `customers` VALUES (1001, 45);
 INSERT INTO `customers` VALUES (1002, 46);
+INSERT INTO `customers` VALUES (1003, 49);
 
 -- ----------------------------
 -- Table structure for delivery_adresses
@@ -805,12 +807,12 @@ CREATE TABLE `users`  (
   `phone_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `sex` enum('mężczyzna','kobieta') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id_user`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 49 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 50 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (1, 'Piotr', 'Ciosmak', 'piotrciosmak2001@gmail.com', '791-371-715', 'mężczyzna');
+INSERT INTO `users` VALUES (1, 'Piotr', 'Ciosmak', 'piotrciosmak2001@gmail.com', '111-222-333', 'mężczyzna');
 INSERT INTO `users` VALUES (2, 'Kamil', 'Dąbek', NULL, '500-374-123', 'mężczyzna');
 INSERT INTO `users` VALUES (3, 'Igor', 'Bobek', NULL, '632-849-361', 'mężczyzna');
 INSERT INTO `users` VALUES (4, 'Marcel', 'Czurczak', 'marceli223@gmail.com', '687-921-314', 'mężczyzna');
@@ -849,6 +851,7 @@ INSERT INTO `users` VALUES (45, 'Karol', 'Niedzielski', 'kaorlek@gmail.com', '74
 INSERT INTO `users` VALUES (46, 'Piotr', 'Parada', 'parada@gmail.com', '986-763-542', 'mężczyzna');
 INSERT INTO `users` VALUES (47, 'Czarek', 'Niedola', 'dolla@wp.pl', '984-095-673', 'mężczyzna');
 INSERT INTO `users` VALUES (48, 'Karol', 'Poniedziałek', 'koarolek203@gmail.com', '123-456-789', 'mężczyzna');
+INSERT INTO `users` VALUES (49, 'Kamila', 'Borsuk', 'kamila@gmail.com', '874-936-473', 'kobieta');
 
 -- ----------------------------
 -- Table structure for vehicles_types
@@ -1456,6 +1459,24 @@ END
 delimiter ;
 
 -- ----------------------------
+-- Procedure structure for update_phone_number
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `update_phone_number`;
+delimiter ;;
+CREATE PROCEDURE `update_phone_number`(IN `v_id_user` int,IN `v_phone_number` int)
+BEGIN
+	START TRANSACTION;
+	
+	UPDATE users
+	SET phone_number = v_phone_number
+	WHERE id_user = v_id_user;
+	
+	COMMIT;
+END
+;;
+delimiter ;
+
+-- ----------------------------
 -- Procedure structure for update_price
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `update_price`;
@@ -1467,6 +1488,36 @@ BEGIN
 	UPDATE drinks
 	SET price = v_price
 	WHERE id_drink = v_id_drink;
+	
+	COMMIT;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for update_sex
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `update_sex`;
+delimiter ;;
+CREATE PROCEDURE `update_sex`(IN `v_id_user` int,IN `v_sex` tinyint)
+BEGIN
+	START TRANSACTION;
+	
+	SELECT @tmp_phone_number := CONCAT(SUBSTR(phone_number,1,3), SUBSTR(phone_number,5,3), SUBSTR(phone_number,9))
+	FROM users
+	WHERE id_user = v_id_user;
+	
+	SET @LEN_NUMBER = LENGTH(@tmp_phone_number);
+	
+	SELECT @LEN_NUMBER;
+	
+	UPDATE users
+	SET phone_number = @tmp_phone_number
+	WHERE id_user = v_id_user;
+	
+	UPDATE users
+	SET sex = v_sex
+	WHERE id_user = v_id_user;
 	
 	COMMIT;
 END
@@ -1921,21 +1972,6 @@ delimiter ;
 -- ----------------------------
 -- Triggers structure for table users
 -- ----------------------------
-DROP TRIGGER IF EXISTS `usersEmailCheckIfCorrectI`;
-delimiter ;;
-CREATE TRIGGER `usersEmailCheckIfCorrectI` BEFORE INSERT ON `users` FOR EACH ROW BEGIN
-	IF ((new.email LIKE '%@%.%') OR (new.email <=> NULL)) THEN
-		SET new.email = LOWER(new.email);
-	ELSE
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Niepoprawny adres e-mail!';
-	END IF;
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Triggers structure for table users
--- ----------------------------
 DROP TRIGGER IF EXISTS `usersFirst_nameCorrectU`;
 delimiter ;;
 CREATE TRIGGER `usersFirst_nameCorrectU` BEFORE UPDATE ON `users` FOR EACH ROW BEGIN
@@ -1958,13 +1994,13 @@ delimiter ;
 -- ----------------------------
 -- Triggers structure for table users
 -- ----------------------------
-DROP TRIGGER IF EXISTS `usersPhone_numberCheckIfCorrectU`;
+DROP TRIGGER IF EXISTS `usersEmailCheckIfCorrectU`;
 delimiter ;;
-CREATE TRIGGER `usersPhone_numberCheckIfCorrectU` BEFORE UPDATE ON `users` FOR EACH ROW BEGIN
-	IF (LENGTH(new.phone_number) <=> 9) THEN
-		SET new.phone_number = CONCAT(SUBSTR(new.phone_number, 1, 3), '-', SUBSTR(new.phone_number, 4, 3), '-', SUBSTR(new.phone_number, 7));
+CREATE TRIGGER `usersEmailCheckIfCorrectU` BEFORE UPDATE ON `users` FOR EACH ROW BEGIN
+	IF ((new.email LIKE '%@%.%') OR (new.email <=> NULL)) THEN
+		SET new.email = LOWER(new.email);
 	ELSE
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Niepoprawny numer telefonu!';
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Niepoprawny adres e-mail!';
 	END IF;
 END
 ;;
@@ -1973,13 +2009,13 @@ delimiter ;
 -- ----------------------------
 -- Triggers structure for table users
 -- ----------------------------
-DROP TRIGGER IF EXISTS `usersEmailCheckIfCorrectU`;
+DROP TRIGGER IF EXISTS `usersPhone_numberCheckIfCorrectU`;
 delimiter ;;
-CREATE TRIGGER `usersEmailCheckIfCorrectU` BEFORE UPDATE ON `users` FOR EACH ROW BEGIN
-	IF ((new.email LIKE '%@%.%') OR (new.email <=> NULL)) THEN
-		SET new.email = LOWER(new.email);
+CREATE TRIGGER `usersPhone_numberCheckIfCorrectU` BEFORE UPDATE ON `users` FOR EACH ROW BEGIN
+	IF (LENGTH(new.phone_number) <=> 9) THEN
+		SET new.phone_number = CONCAT(SUBSTR(new.phone_number, 1, 3), '-', SUBSTR(new.phone_number, 4, 3), '-', SUBSTR(new.phone_number, 7));
 	ELSE
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Niepoprawny adres e-mail!';
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Niepoprawny numer telefonu!';
 	END IF;
 END
 ;;
