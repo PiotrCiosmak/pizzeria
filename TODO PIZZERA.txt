@@ -1,37 +1,5 @@
-PIZZA:
-	Naprawa ceny add_pizza (jest tam komentarz)
-	
-PEOPLE:
-	tutaj nie działa numer telefonu (trigger z -)
-	?zmien imie
-	?zmien naziwsko
-	?zmien maila
-	?usun maila
-	?zmien płec
-	
-ORDER:
-	add_order jak umożliwośc wpisywanie kilku id_drink i id_pizza zeby zrobić zamówinie na zmienną ilość produktów (jaki drink ile sztuk (dodanie price do ordered_drinks), jaka pizza ile sztuk(dodanie price do ordered_pizzas), jaki dodatkowe sosy  do pizzy dokupił ktoś ile sztuk (ustawienie ceny), dodanie ceny końcowej z 3 tabeli które podsumowuja wszystkie zamówione elementy
-
-ADRESY:
-	tutaj nie działa kod pocztowy (trigger z -) to samo co z numerem telefonu
-	?update ulice
-	?update house number
-	?update apartmen_number
-	?update city
-	?set_active_adress (dodać infa który sprawdza czy id_delivery_adres nalezy do tego customera jeśli nie to wywala błąd, jeśli tak to wykonuje się dalej
-	
 ******************************
-ZMIENIC WSZEDZIE WYSZUKIWANIE AKTULANIE WSTAWIANEGO ID BO JEST PROBLEM Z TYM MAX() JAK SIE USUNIE JAKIŚ REKORD A POZNIEJ CHCE ZNOWU DODAĆ TO ZBYT MAŁE ID WYSZYJYJE MAX
 WERSJONOWANIE I PARTYCJONOWANIE BAZY zamówień
-WYPISYWANIE DANYCH DUŻO NP. LISTA KLIENTÓW Z JAKIEGOŚ MIASTA
+WIDOKI DUŻO NP. LISTA KLIENTÓW Z JAKIEGOŚ MIASTA
 EVENTS do zamównień
-naprawić trigger odnoście update phone number (USERS)
 ******************************
-
-	
-PYTANIA DO PROWADZĄCEGO:
-pizza/add_ingredient
-3. np tu ale też w innych tabelach Jak umożliwić wybór id z innej tabeli z listy
-
-pizza/pizza 
-2. Jak zrobić automatycznie aktulizowanie cen po zmianie czegoś w pizzy lub po zmianie np brzegu danej pizzy
