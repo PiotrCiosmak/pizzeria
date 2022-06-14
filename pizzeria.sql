@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : local
+ Source Server         : Lokalna
  Source Server Type    : MariaDB
- Source Server Version : 100607
- Source Host           : localhost:3306
+ Source Server Version : 100608
+ Source Host           : localhost:666
  Source Schema         : pizzeria
 
  Target Server Type    : MariaDB
- Target Server Version : 100607
+ Target Server Version : 100608
  File Encoding         : 65001
 
- Date: 04/06/2022 01:47:27
+ Date: 12/06/2022 20:35:20
 */
 
 SET NAMES utf8mb4;
@@ -23,15 +23,14 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `accounts`;
 CREATE TABLE `accounts`  (
   `id_account` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `login` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `login` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `creation_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
   `id_user` int(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`id_account`) USING BTREE,
   INDEX `id_user`(`id_user`) USING BTREE,
-  CONSTRAINT `accounts_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `accountsIfPasswordIsNotToShortC` CHECK (octet_length(`password`) > 8)
-) ENGINE = InnoDB AUTO_INCREMENT = 63 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+  CONSTRAINT `accounts_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 64 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of accounts
@@ -40,7 +39,7 @@ INSERT INTO `accounts` VALUES (1, 'piotrek221', '23f8uh8js8dhf82h', '2022-05-31 
 INSERT INTO `accounts` VALUES (2, 'bobikson', 'marloowqheqeqw', '2022-05-31 11:54:26', 3);
 INSERT INTO `accounts` VALUES (3, 'marceli', 'eh28h8dh28hd1i2', '2022-05-31 11:54:28', 4);
 INSERT INTO `accounts` VALUES (4, 'miki', '3dyusagdyasu7', '2022-05-31 11:53:40', 5);
-INSERT INTO `accounts` VALUES (5, 'dabek', 'kamilos123', '2022-04-10 22:57:27', 2);
+INSERT INTO `accounts` VALUES (5, 'dabek', 'superhaselko', '2022-06-11 11:47:59', 2);
 INSERT INTO `accounts` VALUES (6, 'ania', 'h8f2h8hf28jf', '2022-05-31 11:54:33', 6);
 INSERT INTO `accounts` VALUES (7, 'januuusz', 'hif2h9hf92nj2', '2022-05-31 11:54:35', 10);
 INSERT INTO `accounts` VALUES (8, 'figkaro', 'karolcia66523uhd2', '2022-05-31 11:55:24', 7);
@@ -74,6 +73,7 @@ INSERT INTO `accounts` VALUES (53, 'kamilbąk', 'dwqhdhsa87', '2022-06-02 19:09:
 INSERT INTO `accounts` VALUES (58, 'rafałbbbbbbbbb', '1dsajuhd8a', '2022-06-02 19:37:35', 81);
 INSERT INTO `accounts` VALUES (60, 'ccccbbbbbbbbb', '1dsajuhd8a', '2022-06-02 19:47:27', 83);
 INSERT INTO `accounts` VALUES (62, 'kamildostawca1', '1hudusuddwq', '2022-06-03 00:27:58', 85);
+INSERT INTO `accounts` VALUES (63, 'piotrciosmak', 'superhaselko123', '2022-06-10 18:12:51', 101);
 
 -- ----------------------------
 -- Table structure for customers
@@ -85,7 +85,7 @@ CREATE TABLE `customers`  (
   PRIMARY KEY (`id_customer`) USING BTREE,
   INDEX `id_user`(`id_user`) USING BTREE,
   CONSTRAINT `customers_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1013 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1014 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of customers
@@ -113,6 +113,7 @@ INSERT INTO `customers` VALUES (1006, 55);
 INSERT INTO `customers` VALUES (1008, 60);
 INSERT INTO `customers` VALUES (1009, 66);
 INSERT INTO `customers` VALUES (1012, 83);
+INSERT INTO `customers` VALUES (1013, 101);
 
 -- ----------------------------
 -- Table structure for delivery_adresses
@@ -120,17 +121,17 @@ INSERT INTO `customers` VALUES (1012, 83);
 DROP TABLE IF EXISTS `delivery_adresses`;
 CREATE TABLE `delivery_adresses`  (
   `id_delivery_adress` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `street` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `house_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `apartment_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `post_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `city` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `street` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `house_number` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `apartment_number` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `post_code` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `city` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `deliver_costs` double UNSIGNED NOT NULL DEFAULT 0,
   `id_customer` int(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`id_delivery_adress`) USING BTREE,
   INDEX `id_customer`(`id_customer`) USING BTREE,
   CONSTRAINT `delivery_adresses_ibfk_1` FOREIGN KEY (`id_customer`) REFERENCES `customers` (`id_customer`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of delivery_adresses
@@ -150,6 +151,7 @@ INSERT INTO `delivery_adresses` VALUES (12, 'Marszałka', '1', '2', '32-043', 'G
 INSERT INTO `delivery_adresses` VALUES (13, 'Gołoty', '22', NULL, '87-232', 'Piastów', 0, 12);
 INSERT INTO `delivery_adresses` VALUES (17, 'Broniewskiego', '2C', '', '39-400', 'Tarnobrzeg', 0, 1);
 INSERT INTO `delivery_adresses` VALUES (18, 'Kamienna', '11', NULL, '50-344', 'Kraków', 0, 1);
+INSERT INTO `delivery_adresses` VALUES (19, 'Długa', '18', NULL, '50-344', 'Kraków', 0, 2);
 
 -- ----------------------------
 -- Table structure for delivery_persons
@@ -182,7 +184,7 @@ INSERT INTO `delivery_persons` VALUES (8, 2, 85);
 DROP TABLE IF EXISTS `doughs`;
 CREATE TABLE `doughs`  (
   `id_doughs` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `dough` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `dough` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `price` double UNSIGNED NOT NULL,
   PRIMARY KEY (`id_doughs`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
@@ -208,6 +210,7 @@ CREATE TABLE `drinks`  (
   `price` double UNSIGNED NOT NULL,
   `id_type` int(10) UNSIGNED NOT NULL,
   `id_container` int(10) UNSIGNED NOT NULL,
+  `amount` int(10) NULL DEFAULT NULL,
   PRIMARY KEY (`id_drink`) USING BTREE,
   INDEX `id_type`(`id_type`) USING BTREE,
   INDEX `id_container`(`id_container`) USING BTREE,
@@ -218,23 +221,23 @@ CREATE TABLE `drinks`  (
 -- ----------------------------
 -- Records of drinks
 -- ----------------------------
-INSERT INTO `drinks` VALUES (1, 'lemoniada', '0.3', 0, 0, 8.99, 3, 1);
-INSERT INTO `drinks` VALUES (2, 'pepsi max', '0.33', 1, 0, 6.99, 2, 2);
-INSERT INTO `drinks` VALUES (3, 'pepsi', '0.33', 0, 0, 6.99, 2, 2);
-INSERT INTO `drinks` VALUES (4, 'mirinda', '0.33', 0, 0, 6.99, 2, 2);
-INSERT INTO `drinks` VALUES (5, '7up', '0.33', 0, 0, 6.99, 2, 2);
-INSERT INTO `drinks` VALUES (6, 'pepsi max', '0.85', 1, 0, 9.99, 2, 1);
-INSERT INTO `drinks` VALUES (7, 'pepsi', '0.85', 0, 0, 9.99, 2, 1);
-INSERT INTO `drinks` VALUES (8, 'mirinda', '0.85', 0, 0, 9.99, 2, 1);
-INSERT INTO `drinks` VALUES (9, '7up', '0.85', 0, 0, 9.99, 2, 1);
-INSERT INTO `drinks` VALUES (10, 'sok pomarańczowy', '1', 0, 0, 9.99, 3, 1);
-INSERT INTO `drinks` VALUES (11, 'sok jabłkowy', '1', 0, 0, 9.99, 3, 1);
-INSERT INTO `drinks` VALUES (12, 'woda niegazowna', '0.5', 1, 0, 6.99, 3, 1);
-INSERT INTO `drinks` VALUES (13, 'woda gazowana', '0.5', 1, 0, 6.99, 3, 1);
-INSERT INTO `drinks` VALUES (14, 'lech free 0,0%', '0.5', 0, 0, 8.99, 2, 2);
-INSERT INTO `drinks` VALUES (15, 'lech free 0,0% chmiele cytrusowe', '0.5', 0, 0, 8.99, 2, 2);
-INSERT INTO `drinks` VALUES (16, 'warka 5,2%', '0.5', 0, 1, 6.99, 1, 2);
-INSERT INTO `drinks` VALUES (17, 'woda niegazowana', '0.2', 1, 0, 6.99, 3, 3);
+INSERT INTO `drinks` VALUES (1, 'lemoniada', '0.3', 0, 0, 8.99, 3, 1, 100);
+INSERT INTO `drinks` VALUES (2, 'pepsi max', '0.33', 1, 0, 6.99, 2, 2, 100);
+INSERT INTO `drinks` VALUES (3, 'pepsi', '0.33', 0, 0, 6.99, 2, 2, 96);
+INSERT INTO `drinks` VALUES (4, 'mirinda', '0.33', 0, 0, 6.99, 2, 2, 100);
+INSERT INTO `drinks` VALUES (5, '7up', '0.33', 0, 0, 6.99, 2, 2, 100);
+INSERT INTO `drinks` VALUES (6, 'pepsi max', '0.85', 1, 0, 9.99, 2, 1, 100);
+INSERT INTO `drinks` VALUES (7, 'pepsi', '0.85', 0, 0, 9.99, 2, 1, 100);
+INSERT INTO `drinks` VALUES (8, 'mirinda', '0.85', 0, 0, 9.99, 2, 1, 100);
+INSERT INTO `drinks` VALUES (9, '7up', '0.85', 0, 0, 9.99, 2, 1, 100);
+INSERT INTO `drinks` VALUES (10, 'sok pomarańczowy', '1', 0, 0, 9.99, 3, 1, 100);
+INSERT INTO `drinks` VALUES (11, 'sok jabłkowy', '1', 0, 0, 9.99, 3, 1, 100);
+INSERT INTO `drinks` VALUES (12, 'woda niegazowna', '0.5', 1, 0, 6.99, 3, 1, 100);
+INSERT INTO `drinks` VALUES (13, 'woda gazowana', '0.5', 1, 0, 6.99, 3, 1, 100);
+INSERT INTO `drinks` VALUES (14, 'lech free 0,0%', '0.5', 0, 0, 8.99, 2, 2, 100);
+INSERT INTO `drinks` VALUES (15, 'lech free 0,0% chmiele cytrusowe', '0.5', 0, 0, 8.99, 2, 2, 100);
+INSERT INTO `drinks` VALUES (16, 'warka 5,2%', '0.5', 0, 1, 6.99, 1, 2, 100);
+INSERT INTO `drinks` VALUES (17, 'woda niegazowana', '0.2', 1, 0, 6.99, 3, 3, 100);
 
 -- ----------------------------
 -- Table structure for drinks_containers
@@ -242,7 +245,7 @@ INSERT INTO `drinks` VALUES (17, 'woda niegazowana', '0.2', 1, 0, 6.99, 3, 3);
 DROP TABLE IF EXISTS `drinks_containers`;
 CREATE TABLE `drinks_containers`  (
   `id_container` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `container` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `container` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id_container`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
@@ -259,7 +262,7 @@ INSERT INTO `drinks_containers` VALUES (3, 'szklana butelka');
 DROP TABLE IF EXISTS `drinks_types`;
 CREATE TABLE `drinks_types`  (
   `id_type` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `type` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id_type`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
@@ -291,12 +294,12 @@ CREATE TABLE `id_review_generator`  (
   `cache_size` bigint(21) UNSIGNED NOT NULL,
   `cycle_option` tinyint(1) UNSIGNED NOT NULL COMMENT '0 if no cycles are allowed, 1 if the sequence should begin a new cycle when maximum_value is passed',
   `cycle_count` bigint(21) NOT NULL COMMENT 'How many cycles have been done'
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_polish_ci ROW_FORMAT = Fixed;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Fixed;
 
 -- ----------------------------
 -- Records of id_review_generator
 -- ----------------------------
-INSERT INTO `id_review_generator` VALUES (1022, 1, 9223372036854775806, 22, 1, 1000, 0, 0);
+INSERT INTO `id_review_generator` VALUES (1100, 1, 9223372036854775806, 100, 1, 1000, 0, 0);
 
 -- ----------------------------
 -- Table structure for id_user_generator
@@ -311,12 +314,12 @@ CREATE TABLE `id_user_generator`  (
   `cache_size` bigint(21) UNSIGNED NOT NULL,
   `cycle_option` tinyint(1) UNSIGNED NOT NULL COMMENT '0 if no cycles are allowed, 1 if the sequence should begin a new cycle when maximum_value is passed',
   `cycle_count` bigint(21) NOT NULL COMMENT 'How many cycles have been done'
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_polish_ci ROW_FORMAT = Fixed;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Fixed;
 
 -- ----------------------------
 -- Records of id_user_generator
 -- ----------------------------
-INSERT INTO `id_user_generator` VALUES (1075, 1, 9223372036854775806, 75, 1, 1000, 0, 0);
+INSERT INTO `id_user_generator` VALUES (1100, 1, 9223372036854775806, 100, 1, 1000, 0, 0);
 
 -- ----------------------------
 -- Table structure for ingredient_types
@@ -324,7 +327,7 @@ INSERT INTO `id_user_generator` VALUES (1075, 1, 9223372036854775806, 75, 1, 100
 DROP TABLE IF EXISTS `ingredient_types`;
 CREATE TABLE `ingredient_types`  (
   `id_ingredient_type` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id_ingredient_type`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
@@ -351,10 +354,11 @@ INSERT INTO `ingredient_types` VALUES (13, 'słodycz');
 DROP TABLE IF EXISTS `ingredients`;
 CREATE TABLE `ingredients`  (
   `id_ingredient` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `ingredient` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `ingredient` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `is_hot` tinyint(1) NULL DEFAULT 0,
   `price` double UNSIGNED NOT NULL,
   `image` blob NULL DEFAULT NULL,
+  `amount` int(10) NULL DEFAULT NULL,
   `id_ingredient_type` int(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`id_ingredient`) USING BTREE,
   INDEX `id_ingredient_type`(`id_ingredient_type`) USING BTREE,
@@ -364,78 +368,145 @@ CREATE TABLE `ingredients`  (
 -- ----------------------------
 -- Records of ingredients
 -- ----------------------------
-INSERT INTO `ingredients` VALUES (1, 'sos pomidorowy', 0, 1, NULL, 6);
-INSERT INTO `ingredients` VALUES (2, 'ser mozzarella', 0, 3, NULL, 4);
-INSERT INTO `ingredients` VALUES (3, 'salami', 0, 4, NULL, 7);
-INSERT INTO `ingredients` VALUES (4, 'salami peperoni', 1, 4, NULL, 7);
-INSERT INTO `ingredients` VALUES (5, 'papryka chili', 1, 2, NULL, 2);
-INSERT INTO `ingredients` VALUES (6, 'oliwki czarne', 0, 2, NULL, 2);
-INSERT INTO `ingredients` VALUES (7, 'ostre przyprawy', 1, 0, NULL, 8);
-INSERT INTO `ingredients` VALUES (8, 'cebula', 0, 2, NULL, 2);
-INSERT INTO `ingredients` VALUES (9, 'ananas', 0, 3, NULL, 3);
-INSERT INTO `ingredients` VALUES (10, 'szynka', 0, 4, NULL, 7);
-INSERT INTO `ingredients` VALUES (11, 'ser feta', 0, 3, NULL, 4);
-INSERT INTO `ingredients` VALUES (12, 'krewetki', 0, 8, NULL, 9);
-INSERT INTO `ingredients` VALUES (13, 'pieczarki', 0, 2, NULL, 2);
-INSERT INTO `ingredients` VALUES (14, 'papryka', 0, 2, NULL, 2);
-INSERT INTO `ingredients` VALUES (15, 'parmezan', 0, 3, NULL, 4);
-INSERT INTO `ingredients` VALUES (16, 'boczek', 0, 6, NULL, 1);
-INSERT INTO `ingredients` VALUES (17, 'kukurydza', 0, 2, NULL, 2);
-INSERT INTO `ingredients` VALUES (18, 'ogórek kiszony', 0, 2, NULL, 2);
-INSERT INTO `ingredients` VALUES (19, 'ser mozzarella podwójny', 0, 6, NULL, 4);
-INSERT INTO `ingredients` VALUES (20, 'kabanos', 0, 6, NULL, 1);
-INSERT INTO `ingredients` VALUES (21, 'czosnek', 0, 2, NULL, 2);
-INSERT INTO `ingredients` VALUES (22, 'groszek', 0, 2, NULL, 2);
-INSERT INTO `ingredients` VALUES (23, 'fasolka szparagowa', 0, 2, NULL, 2);
-INSERT INTO `ingredients` VALUES (24, 'kurczak', 0, 6, NULL, 1);
-INSERT INTO `ingredients` VALUES (25, 'wołowina gyros', 0, 6, NULL, 1);
-INSERT INTO `ingredients` VALUES (26, 'tuńczyk', 0, 5, NULL, 5);
-INSERT INTO `ingredients` VALUES (27, 'grillowany bakłażan', 0, 3, NULL, 2);
-INSERT INTO `ingredients` VALUES (28, 'suszone pomidory w oleju', 0, 3, NULL, 2);
-INSERT INTO `ingredients` VALUES (29, 'natka pietruszki', 0, 1, NULL, 2);
-INSERT INTO `ingredients` VALUES (30, 'wołowina', 0, 6, NULL, 1);
-INSERT INTO `ingredients` VALUES (31, 'fasola czerwona', 0, 2, NULL, 2);
-INSERT INTO `ingredients` VALUES (32, 'małże', 0, 8, NULL, 9);
-INSERT INTO `ingredients` VALUES (33, 'oliwki zielone', 0, 2, NULL, 2);
-INSERT INTO `ingredients` VALUES (34, 'borowiki', 0, 4, NULL, 10);
-INSERT INTO `ingredients` VALUES (35, 'podgrzybki', 0, 4, NULL, 10);
-INSERT INTO `ingredients` VALUES (36, 'sos śmietanowy', 0, 1, NULL, 6);
-INSERT INTO `ingredients` VALUES (37, 'wędzony łosoś', 0, 6, NULL, 5);
-INSERT INTO `ingredients` VALUES (38, 'cytryna', 0, 3, NULL, 3);
-INSERT INTO `ingredients` VALUES (39, 'szpinak', 0, 2, NULL, 2);
-INSERT INTO `ingredients` VALUES (40, 'jajko', 0, 3, NULL, 4);
-INSERT INTO `ingredients` VALUES (42, 'chipsy paprykowe', 0, 5, NULL, 11);
-INSERT INTO `ingredients` VALUES (43, 'mieszanka ważyw chińskich', 0, 2, NULL, 2);
-INSERT INTO `ingredients` VALUES (44, 'kurczak curry', 0, 7, NULL, 1);
-INSERT INTO `ingredients` VALUES (46, 'przyprawy orientalne', 0, 0, NULL, 8);
-INSERT INTO `ingredients` VALUES (47, 'brzoskwinia', 0, 3, NULL, 3);
-INSERT INTO `ingredients` VALUES (48, 'mięso mielone', 0, 6, NULL, 1);
-INSERT INTO `ingredients` VALUES (49, 'podwójny sos pomidorowy', 0, 2, NULL, 6);
-INSERT INTO `ingredients` VALUES (50, 'kiełbasa', 0, 6, NULL, 1);
-INSERT INTO `ingredients` VALUES (51, 'pomidory', 0, 2, NULL, 2);
-INSERT INTO `ingredients` VALUES (52, 'filety anchois', 0, 5, NULL, 5);
-INSERT INTO `ingredients` VALUES (53, 'kapary', 0, 2, NULL, 12);
-INSERT INTO `ingredients` VALUES (54, 'ser pleśniowy', 0, 3, NULL, 4);
-INSERT INTO `ingredients` VALUES (55, 'gouda', 0, 3, NULL, 4);
-INSERT INTO `ingredients` VALUES (56, 'camemert', 0, 3, NULL, 4);
-INSERT INTO `ingredients` VALUES (57, 'pieczone ziemniaki', 0, 3, NULL, 2);
-INSERT INTO `ingredients` VALUES (58, 'prażona cebula', 0, 3, NULL, 2);
-INSERT INTO `ingredients` VALUES (59, 'jajka sadzone', 0, 4, NULL, 4);
-INSERT INTO `ingredients` VALUES (60, 'szynka dojrzewająca', 0, 4, NULL, 7);
-INSERT INTO `ingredients` VALUES (61, 'rukola', 0, 2, NULL, 2);
-INSERT INTO `ingredients` VALUES (62, 'jalapeno', 1, 2, NULL, 2);
-INSERT INTO `ingredients` VALUES (63, 'zielony pieprz marynowany', 0, 0, NULL, 8);
-INSERT INTO `ingredients` VALUES (64, 'mini kolby kukurydzny', 0, 3, NULL, 2);
-INSERT INTO `ingredients` VALUES (65, 'roztrzepane jajka', 0, 4, NULL, 4);
-INSERT INTO `ingredients` VALUES (66, 'filet wędzony z indyka', 0, 6, NULL, 1);
-INSERT INTO `ingredients` VALUES (67, 'brokuły', 0, 2, NULL, 2);
-INSERT INTO `ingredients` VALUES (68, 'paluszki krabowe', 0, 8, NULL, 9);
-INSERT INTO `ingredients` VALUES (69, 'seler naciowy', 0, 2, NULL, 2);
-INSERT INTO `ingredients` VALUES (70, 'oregano', 0, 0, NULL, 8);
-INSERT INTO `ingredients` VALUES (71, 'żurawina', 0, 3, NULL, 3);
-INSERT INTO `ingredients` VALUES (72, 'ser wędzony', 0, 3, NULL, 4);
-INSERT INTO `ingredients` VALUES (73, 'tymianek', 0, 0, NULL, 8);
-INSERT INTO `ingredients` VALUES (74, 'majeranek', 0, 0, '', 8);
+INSERT INTO `ingredients` VALUES (1, 'sos pomidorowy', 0, 1, NULL, 68, 6);
+INSERT INTO `ingredients` VALUES (2, 'ser mozzarella', 0, 3, NULL, 69, 4);
+INSERT INTO `ingredients` VALUES (3, 'salami', 0, 4, NULL, 100, 7);
+INSERT INTO `ingredients` VALUES (4, 'salami peperoni', 1, 4, NULL, 96, 7);
+INSERT INTO `ingredients` VALUES (5, 'papryka chili', 1, 2, NULL, 98, 2);
+INSERT INTO `ingredients` VALUES (6, 'oliwki czarne', 0, 2, NULL, 98, 2);
+INSERT INTO `ingredients` VALUES (7, 'ostre przyprawy', 1, 0, NULL, 98, 8);
+INSERT INTO `ingredients` VALUES (8, 'cebula', 0, 2, NULL, 98, 2);
+INSERT INTO `ingredients` VALUES (9, 'ananas', 0, 3, NULL, 100, 3);
+INSERT INTO `ingredients` VALUES (10, 'szynka', 0, 4, NULL, 100, 7);
+INSERT INTO `ingredients` VALUES (11, 'ser feta', 0, 3, NULL, 100, 4);
+INSERT INTO `ingredients` VALUES (12, 'krewetki', 0, 8, NULL, 100, 9);
+INSERT INTO `ingredients` VALUES (13, 'pieczarki', 0, 2, NULL, 100, 2);
+INSERT INTO `ingredients` VALUES (14, 'papryka', 0, 2, NULL, 100, 2);
+INSERT INTO `ingredients` VALUES (15, 'parmezan', 0, 3, NULL, 100, 4);
+INSERT INTO `ingredients` VALUES (16, 'boczek', 0, 6, NULL, 100, 1);
+INSERT INTO `ingredients` VALUES (17, 'kukurydza', 0, 2, NULL, 100, 2);
+INSERT INTO `ingredients` VALUES (18, 'ogórek kiszony', 0, 2, NULL, 100, 2);
+INSERT INTO `ingredients` VALUES (19, 'ser mozzarella podwójny', 0, 6, NULL, 100, 4);
+INSERT INTO `ingredients` VALUES (20, 'kabanos', 0, 6, NULL, 100, 1);
+INSERT INTO `ingredients` VALUES (21, 'czosnek', 0, 2, NULL, 100, 2);
+INSERT INTO `ingredients` VALUES (22, 'groszek', 0, 2, NULL, 100, 2);
+INSERT INTO `ingredients` VALUES (23, 'fasolka szparagowa', 0, 2, NULL, 100, 2);
+INSERT INTO `ingredients` VALUES (24, 'kurczak', 0, 6, NULL, 100, 1);
+INSERT INTO `ingredients` VALUES (25, 'wołowina gyros', 0, 6, NULL, 100, 1);
+INSERT INTO `ingredients` VALUES (26, 'tuńczyk', 0, 5, NULL, 100, 5);
+INSERT INTO `ingredients` VALUES (27, 'grillowany bakłażan', 0, 3, NULL, 100, 2);
+INSERT INTO `ingredients` VALUES (28, 'suszone pomidory w oleju', 0, 3, NULL, 100, 2);
+INSERT INTO `ingredients` VALUES (29, 'natka pietruszki', 0, 1, NULL, 100, 2);
+INSERT INTO `ingredients` VALUES (30, 'wołowina', 0, 6, NULL, 100, 1);
+INSERT INTO `ingredients` VALUES (31, 'fasola czerwona', 0, 2, NULL, 100, 2);
+INSERT INTO `ingredients` VALUES (32, 'małże', 0, 8, NULL, 100, 9);
+INSERT INTO `ingredients` VALUES (33, 'oliwki zielone', 0, 2, NULL, 100, 2);
+INSERT INTO `ingredients` VALUES (34, 'borowiki', 0, 4, NULL, 100, 10);
+INSERT INTO `ingredients` VALUES (35, 'podgrzybki', 0, 4, NULL, 100, 10);
+INSERT INTO `ingredients` VALUES (36, 'sos śmietanowy', 0, 1, NULL, 100, 6);
+INSERT INTO `ingredients` VALUES (37, 'wędzony łosoś', 0, 6, NULL, 100, 5);
+INSERT INTO `ingredients` VALUES (38, 'cytryna', 0, 3, NULL, 100, 3);
+INSERT INTO `ingredients` VALUES (39, 'szpinak', 0, 2, NULL, 100, 2);
+INSERT INTO `ingredients` VALUES (40, 'jajko', 0, 3, NULL, 100, 4);
+INSERT INTO `ingredients` VALUES (42, 'chipsy paprykowe', 0, 5, NULL, 100, 11);
+INSERT INTO `ingredients` VALUES (43, 'mieszanka ważyw chińskich', 0, 2, NULL, 100, 2);
+INSERT INTO `ingredients` VALUES (44, 'kurczak curry', 0, 7, NULL, 100, 1);
+INSERT INTO `ingredients` VALUES (46, 'przyprawy orientalne', 0, 0, NULL, 100, 8);
+INSERT INTO `ingredients` VALUES (47, 'brzoskwinia', 0, 3, NULL, 100, 3);
+INSERT INTO `ingredients` VALUES (48, 'mięso mielone', 0, 6, NULL, 100, 1);
+INSERT INTO `ingredients` VALUES (49, 'podwójny sos pomidorowy', 0, 2, NULL, 100, 6);
+INSERT INTO `ingredients` VALUES (50, 'kiełbasa', 0, 6, NULL, 100, 1);
+INSERT INTO `ingredients` VALUES (51, 'pomidory', 0, 2, NULL, 100, 2);
+INSERT INTO `ingredients` VALUES (52, 'filety anchois', 0, 5, NULL, 100, 5);
+INSERT INTO `ingredients` VALUES (53, 'kapary', 0, 2, NULL, 100, 12);
+INSERT INTO `ingredients` VALUES (54, 'ser pleśniowy', 0, 3, NULL, 100, 4);
+INSERT INTO `ingredients` VALUES (55, 'gouda', 0, 3, NULL, 100, 4);
+INSERT INTO `ingredients` VALUES (56, 'camemert', 0, 3, NULL, 100, 4);
+INSERT INTO `ingredients` VALUES (57, 'pieczone ziemniaki', 0, 3, NULL, 100, 2);
+INSERT INTO `ingredients` VALUES (58, 'prażona cebula', 0, 3, NULL, 100, 2);
+INSERT INTO `ingredients` VALUES (59, 'jajka sadzone', 0, 4, NULL, 100, 4);
+INSERT INTO `ingredients` VALUES (60, 'szynka dojrzewająca', 0, 4, NULL, 100, 7);
+INSERT INTO `ingredients` VALUES (61, 'rukola', 0, 2, NULL, 100, 2);
+INSERT INTO `ingredients` VALUES (62, 'jalapeno', 1, 2, NULL, 100, 2);
+INSERT INTO `ingredients` VALUES (63, 'zielony pieprz marynowany', 0, 0, NULL, 100, 8);
+INSERT INTO `ingredients` VALUES (64, 'mini kolby kukurydzny', 0, 3, NULL, 100, 2);
+INSERT INTO `ingredients` VALUES (65, 'roztrzepane jajka', 0, 4, NULL, 100, 4);
+INSERT INTO `ingredients` VALUES (66, 'filet wędzony z indyka', 0, 6, NULL, 100, 1);
+INSERT INTO `ingredients` VALUES (67, 'brokuły', 0, 2, NULL, 100, 2);
+INSERT INTO `ingredients` VALUES (68, 'paluszki krabowe', 0, 8, NULL, 100, 9);
+INSERT INTO `ingredients` VALUES (69, 'seler naciowy', 0, 2, NULL, 100, 2);
+INSERT INTO `ingredients` VALUES (70, 'oregano', 0, 0, NULL, 100, 8);
+INSERT INTO `ingredients` VALUES (71, 'żurawina', 0, 3, NULL, 100, 3);
+INSERT INTO `ingredients` VALUES (72, 'ser wędzony', 0, 3, NULL, 100, 4);
+INSERT INTO `ingredients` VALUES (73, 'tymianek', 0, 0, NULL, 100, 8);
+INSERT INTO `ingredients` VALUES (74, 'majeranek', 0, 0, '', 100, 8);
+
+-- ----------------------------
+-- Table structure for invoice_positions
+-- ----------------------------
+DROP TABLE IF EXISTS `invoice_positions`;
+CREATE TABLE `invoice_positions`  (
+  `id_position` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `gross_price` decimal(10, 2) UNSIGNED NULL DEFAULT NULL,
+  `net_price` decimal(10, 2) NULL DEFAULT NULL,
+  `VAT(%)` int(10) NULL DEFAULT 23,
+  PRIMARY KEY (`id_position`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of invoice_positions
+-- ----------------------------
+INSERT INTO `invoice_positions` VALUES (1, 112.94, 91.82, 23);
+INSERT INTO `invoice_positions` VALUES (2, 60.00, 48.78, 23);
+
+-- ----------------------------
+-- Table structure for invoices
+-- ----------------------------
+DROP TABLE IF EXISTS `invoices`;
+CREATE TABLE `invoices`  (
+  `id_invoice` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_order` int(11) UNSIGNED NOT NULL,
+  `NIP` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `invoice_nr` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `date_of_issue` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `id_position` int(11) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id_invoice`) USING BTREE,
+  INDEX `fk_order`(`id_order`) USING BTREE,
+  INDEX `fk_position`(`id_position`) USING BTREE,
+  CONSTRAINT `fk_order` FOREIGN KEY (`id_order`) REFERENCES `orders` (`id_order`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `fk_position` FOREIGN KEY (`id_position`) REFERENCES `invoice_positions` (`id_position`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of invoices
+-- ----------------------------
+INSERT INTO `invoices` VALUES (1, 6, NULL, '1/2022', '2022-06-10 17:48:57', 1);
+INSERT INTO `invoices` VALUES (2, 7, '1234567890', '2/2022', '2022-06-10 17:50:28', 2);
+
+-- ----------------------------
+-- Table structure for logs_info
+-- ----------------------------
+DROP TABLE IF EXISTS `logs_info`;
+CREATE TABLE `logs_info`  (
+  `id_log` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_user` int(10) UNSIGNED NOT NULL,
+  `IP` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `login_time` datetime NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id_log`, `login_time`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic PARTITION BY RANGE (year(`login_time`))
+PARTITIONS 3
+(PARTITION `do_2022_06` VALUES LESS THAN (738702) ENGINE = InnoDB MAX_ROWS = 0 MIN_ROWS = 0 ,
+PARTITION `od_2022_07_do_2022_12_31` VALUES LESS THAN (738886) ENGINE = InnoDB MAX_ROWS = 0 MIN_ROWS = 0 ,
+PARTITION `wieksze_od_2022` VALUES LESS THAN (MAXVALUE) ENGINE = InnoDB) MAX_ROWS = 0 MIN_ROWS = 0 )
+;
+
+-- ----------------------------
+-- Records of logs_info
+-- ----------------------------
+INSERT INTO `logs_info` VALUES (1, 1, '192.168.1.1', '2022-06-10 11:16:34');
+INSERT INTO `logs_info` VALUES (2, 1, '192.168.1.1', '2022-06-10 11:16:36');
+INSERT INTO `logs_info` VALUES (5, 1, '192.168.1.1', '2022-06-10 11:16:43');
+INSERT INTO `logs_info` VALUES (6, 1, '192.168.1.1', '2022-06-10 11:17:20');
 
 -- ----------------------------
 -- Table structure for managers
@@ -496,13 +567,14 @@ CREATE TABLE `ordered_pizzas`  (
   INDEX `id_order`(`id_order`) USING BTREE,
   CONSTRAINT `ordered_pizzas_ibfk_1` FOREIGN KEY (`id_pizza`) REFERENCES `pizza` (`id_pizza`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `ordered_pizzas_ibfk_2` FOREIGN KEY (`id_order`) REFERENCES `orders` (`id_order`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of ordered_pizzas
 -- ----------------------------
 INSERT INTO `ordered_pizzas` VALUES (10, 3, 0, 5, 6);
 INSERT INTO `ordered_pizzas` VALUES (11, 3, 36, 19, 6);
+INSERT INTO `ordered_pizzas` VALUES (14, 2, 35, 3, 7);
 
 -- ----------------------------
 -- Table structure for ordered_sauces
@@ -551,12 +623,14 @@ CREATE TABLE `orders`  (
   CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`id_customer`) REFERENCES `customers` (`id_customer`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`id_delivery_person`) REFERENCES `delivery_persons` (`id_delivery_person`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `orders_ibfk_3` FOREIGN KEY (`id_delivery_adresses`) REFERENCES `delivery_adresses` (`id_delivery_adress`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of orders
 -- ----------------------------
 INSERT INTO `orders` VALUES (6, 'gotówka przy odbiorze', '2022-06-04 01:44:56', 'oczekiwanie na kuriera', '2022-06-09 01:24:35', '00:00:00', NULL, 'Szybciej!', 112.94, 1, 1, 1);
+INSERT INTO `orders` VALUES (7, 'gotówka przy odbiorze', '2022-06-10 09:31:56', 'przyjęte', '2022-06-10 10:28:29', '00:00:00', NULL, 'Szybciej!', 60, 1, 1, 1);
+INSERT INTO `orders` VALUES (8, 'blik', '2022-06-10 10:04:55', 'w doręczeniu', '2022-06-10 11:04:32', '00:00:00', NULL, 'Jadę!', 100, 3, 2, 2);
 
 -- ----------------------------
 -- Table structure for pizza
@@ -571,9 +645,10 @@ CREATE TABLE `pizza`  (
   PRIMARY KEY (`id_pizza`) USING BTREE,
   INDEX `id_dough`(`id_dough`) USING BTREE,
   INDEX `pizza_ibfk_2`(`id_size`) USING BTREE,
+  FULLTEXT INDEX `pizza`(`pizza`),
   CONSTRAINT `pizza_ibfk_1` FOREIGN KEY (`id_dough`) REFERENCES `doughs` (`id_doughs`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `pizza_ibfk_2` FOREIGN KEY (`id_size`) REFERENCES `sizes` (`id_size`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 52 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 56 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of pizza
@@ -625,6 +700,9 @@ INSERT INTO `pizza` VALUES (44, 'góralska', 1, 1, 0);
 INSERT INTO `pizza` VALUES (45, 'ricca', 1, 1, 0);
 INSERT INTO `pizza` VALUES (46, 'rustica', 1, 1, 0);
 INSERT INTO `pizza` VALUES (51, 'tester', 1, 1, 0);
+INSERT INTO `pizza` VALUES (52, 'chicken', 1, 1, 0);
+INSERT INTO `pizza` VALUES (54, 'prosciutto', 1, 1, 0);
+INSERT INTO `pizza` VALUES (55, 'spicy chicken', 3, 3, 0);
 
 -- ----------------------------
 -- Table structure for pizzas_ingredients
@@ -680,29 +758,17 @@ CREATE TABLE `reviews`  (
   PRIMARY KEY (`id_review`) USING BTREE,
   INDEX `id_order`(`id_order`) USING BTREE,
   CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`id_order`) REFERENCES `orders` (`id_order`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 36 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of reviews
 -- ----------------------------
-
--- ----------------------------
--- Table structure for reviews_images
--- ----------------------------
-DROP TABLE IF EXISTS `reviews_images`;
-CREATE TABLE `reviews_images`  (
-  `id_reviews_image` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `image` longblob NULL DEFAULT NULL,
-  `id_review` int(10) UNSIGNED NOT NULL,
-  PRIMARY KEY (`id_reviews_image`) USING BTREE,
-  INDEX `id_review`(`id_review`) USING BTREE,
-  INDEX `id_image`(`image`(3072)) USING BTREE,
-  CONSTRAINT `reviews_images_ibfk_1` FOREIGN KEY (`id_review`) REFERENCES `reviews` (`id_review`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of reviews_images
--- ----------------------------
+INSERT INTO `reviews` VALUES (24, '2022-06-10 09:35:50', 'Super pizza!', '5', 7);
+INSERT INTO `reviews` VALUES (29, '2022-06-10 09:41:49', 'Elegancka pizza', '3', 7);
+INSERT INTO `reviews` VALUES (30, '2022-06-10 09:42:49', 'Średnia hawajska dla każdego!', '2.5', 7);
+INSERT INTO `reviews` VALUES (32, '2022-06-10 10:00:24', 'Niesmaczne :(', '1', 7);
+INSERT INTO `reviews` VALUES (33, '2022-06-10 10:06:03', 'Świetne', '4.5', 8);
+INSERT INTO `reviews` VALUES (35, '2022-06-10 10:08:05', 'Średnia', '2', 8);
 
 -- ----------------------------
 -- Table structure for sauces
@@ -710,24 +776,48 @@ CREATE TABLE `reviews_images`  (
 DROP TABLE IF EXISTS `sauces`;
 CREATE TABLE `sauces`  (
   `id_sauce` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `sauce` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `sauce` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `price` double UNSIGNED NOT NULL,
+  `amount` int(10) NULL DEFAULT NULL,
   PRIMARY KEY (`id_sauce`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sauces
 -- ----------------------------
-INSERT INTO `sauces` VALUES (1, 'pomidorowy', 2.49);
-INSERT INTO `sauces` VALUES (2, 'czosnkowy', 2.49);
-INSERT INTO `sauces` VALUES (3, 'meksykański', 2.49);
-INSERT INTO `sauces` VALUES (4, 'słodko kwaśny', 2.49);
-INSERT INTO `sauces` VALUES (5, 'tabasco', 3.99);
-INSERT INTO `sauces` VALUES (6, 'pomidorowy z ziołami', 2.49);
-INSERT INTO `sauces` VALUES (7, 'bazyliowy', 3.99);
-INSERT INTO `sauces` VALUES (8, 'bbq', 2.49);
-INSERT INTO `sauces` VALUES (9, 'wściekły pies', 2.49);
-INSERT INTO `sauces` VALUES (10, 'słodkie chilli', 2.99);
+INSERT INTO `sauces` VALUES (1, 'pomidorowy', 2.49, 100);
+INSERT INTO `sauces` VALUES (2, 'czosnkowy', 2.49, 100);
+INSERT INTO `sauces` VALUES (3, 'meksykański', 2.49, 100);
+INSERT INTO `sauces` VALUES (4, 'słodko kwaśny', 2.49, 100);
+INSERT INTO `sauces` VALUES (5, 'tabasco', 3.99, 100);
+INSERT INTO `sauces` VALUES (6, 'pomidorowy z ziołami', 2.49, 100);
+INSERT INTO `sauces` VALUES (7, 'bazyliowy', 3.99, 100);
+INSERT INTO `sauces` VALUES (8, 'bbq', 2.49, 100);
+INSERT INTO `sauces` VALUES (9, 'wściekły pies', 2.49, 100);
+INSERT INTO `sauces` VALUES (10, 'słodkie chilli', 2.99, 100);
+
+-- ----------------------------
+-- Table structure for sessions
+-- ----------------------------
+DROP TABLE IF EXISTS `sessions`;
+CREATE TABLE `sessions`  (
+  `id_session` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_user` int(11) UNSIGNED NOT NULL,
+  `is_active` tinyint(1) NULL DEFAULT NULL,
+  `ip_address` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `browser_info` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `last_event` datetime NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
+  `login_time` datetime NULL DEFAULT NULL,
+  PRIMARY KEY (`id_session`) USING BTREE,
+  INDEX `fk_user`(`id_user`) USING BTREE,
+  CONSTRAINT `fk_user` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sessions
+-- ----------------------------
+INSERT INTO `sessions` VALUES (1, 1, 1, '192.168.1.1', 'Firefox', '2022-06-10 17:44:55', '2022-06-10 17:44:53');
+INSERT INTO `sessions` VALUES (2, 2, 0, '192.168.1.20', 'Chrome', '2022-06-10 16:48:52', '2022-06-10 16:45:43');
 
 -- ----------------------------
 -- Table structure for sizes
@@ -755,74 +845,78 @@ INSERT INTO `sizes` VALUES (5, 12, 6);
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users`  (
   `id_user` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `first_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `last_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `phone_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `first_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `last_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `phone_number` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `code` varchar(6) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT '48',
   `sex` enum('mężczyzna','kobieta') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id_user`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 86 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 102 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (1, 'Piotr', 'Ciosmak', NULL, '000-000-123', 'kobieta');
-INSERT INTO `users` VALUES (2, 'Kamil', 'Dąbek', NULL, '000-000-000', 'mężczyzna');
-INSERT INTO `users` VALUES (3, 'Igor', 'Bobek', NULL, '632-849-361', 'mężczyzna');
-INSERT INTO `users` VALUES (4, 'Marcel', 'Czurczak', 'marceli223@gmail.com', '687-921-314', 'mężczyzna');
-INSERT INTO `users` VALUES (5, 'Mikołaj', 'Dobisz', NULL, '243-242-374', 'mężczyzna');
-INSERT INTO `users` VALUES (6, 'Anna', 'Bolec', NULL, '753-127-264', 'kobieta');
-INSERT INTO `users` VALUES (7, 'Karolina', 'Figala', NULL, '726-537-243', 'kobieta');
-INSERT INTO `users` VALUES (8, 'Jan', 'Kowalski', 'jankowalski2000@gmail.com', '463-245-325', 'mężczyzna');
-INSERT INTO `users` VALUES (9, 'Kacper', 'Solarski', 'kapi21@onet.pl', '672-642-483', 'mężczyzna');
-INSERT INTO `users` VALUES (10, 'Janusz', 'Wąs', NULL, '783-246-342', 'mężczyzna');
-INSERT INTO `users` VALUES (11, 'Janina', 'Bąk', NULL, '823-987-324', 'kobieta');
-INSERT INTO `users` VALUES (12, 'Olga', 'Brzoza', NULL, '791-365-843', 'kobieta');
-INSERT INTO `users` VALUES (13, 'Marcin', 'Wczesny', NULL, '987-321-754', 'mężczyzna');
-INSERT INTO `users` VALUES (14, 'Michał', 'Kozak', NULL, '753-874-362', 'mężczyzna');
-INSERT INTO `users` VALUES (15, 'Bartosz', 'Niedźwiedź', NULL, '764-382-645', 'mężczyzna');
-INSERT INTO `users` VALUES (16, 'Tadeusz', 'Śmiały', NULL, '654-361-237', 'mężczyzna');
-INSERT INTO `users` VALUES (17, 'Olga', 'Kos', NULL, '864-632-462', 'kobieta');
-INSERT INTO `users` VALUES (18, 'Mariola', 'Kosowska', NULL, '874-236-482', 'kobieta');
-INSERT INTO `users` VALUES (19, 'Zofia', 'Kwarc', NULL, '328-473-274', 'kobieta');
-INSERT INTO `users` VALUES (20, 'Arkadiusz', 'Kędra', NULL, '784-236-426', 'mężczyzna');
-INSERT INTO `users` VALUES (21, 'Wojciech', 'Kłos', NULL, '783-287-422', 'mężczyzna');
-INSERT INTO `users` VALUES (22, 'Karol', 'Chwieja', 'karolek@gmail.com', '546-384-527', 'mężczyzna');
-INSERT INTO `users` VALUES (23, 'Kazimierz', 'Bolec', 'bolcus2203@gmail.com', '678-326-432', 'mężczyzna');
-INSERT INTO `users` VALUES (24, 'Stanisław', 'Marzec', 'marcula2313@onet.pl', '267-493-621', 'mężczyzna');
-INSERT INTO `users` VALUES (25, 'Jan', 'Bąk', 'root@wp.pl', '776-428-342', 'mężczyzna');
-INSERT INTO `users` VALUES (26, 'Kornel', 'Januszek', 'root122@vp.pl', '853-821-743', 'mężczyzna');
-INSERT INTO `users` VALUES (27, 'Kamila', 'Poręcz', 'kamisia@vp.pl', '754-732-831', 'kobieta');
-INSERT INTO `users` VALUES (28, 'Piotr', 'Kordon', 'piotr@kordo.pl', '765-437-282', 'mężczyzna');
-INSERT INTO `users` VALUES (29, 'Kamil', 'Czepek', 'kamilo223@wp.pl', '123-456-789', 'mężczyzna');
-INSERT INTO `users` VALUES (30, 'Kamil', 'Dereń', 'kamil.deren.2001@gmail.com', '674-382-912', 'mężczyzna');
-INSERT INTO `users` VALUES (31, 'Patryk', 'Kolba', 'patryczekxd@gmail.com', '876-547-382', 'mężczyzna');
-INSERT INTO `users` VALUES (32, 'Karol', 'Chwieja', 'karolek2122@gmail.com', '678-392-643', 'mężczyzna');
-INSERT INTO `users` VALUES (34, 'Karol', 'Niezdara', 'kaorlek@gmail.com', '764-982-093', 'mężczyzna');
-INSERT INTO `users` VALUES (35, 'Olaf', 'Rabat', 'dasda@gmail.com', '123-456-789', 'mężczyzna');
-INSERT INTO `users` VALUES (45, 'Karol', 'Niedzielski', 'kaorlek@gmail.com', '746-362-812', 'mężczyzna');
-INSERT INTO `users` VALUES (46, 'Piotr', 'Parada', 'parada@gmail.com', '986-763-542', 'mężczyzna');
-INSERT INTO `users` VALUES (47, 'Czarek', 'Niedola', 'dolla@wp.pl', '984-095-673', 'mężczyzna');
-INSERT INTO `users` VALUES (48, 'Karol', 'Poniedziałek', 'koarolek203@gmail.com', '123-456-789', 'mężczyzna');
-INSERT INTO `users` VALUES (52, 'Karol', 'Gąska', 'karolek@gmail.com', '176-489-304', 'mężczyzna');
-INSERT INTO `users` VALUES (53, 'Kamil', 'Pasterniak', NULL, '738-493-173', 'mężczyzna');
-INSERT INTO `users` VALUES (54, 'Karol', 'Gąska', 'karolek@gmail.com', '176-489-304', 'mężczyzna');
-INSERT INTO `users` VALUES (55, 'Karol', 'Gąska', '', '176-489-304', 'mężczyzna');
-INSERT INTO `users` VALUES (56, 'Jan', 'Kowalski', NULL, '123-456-789', 'mężczyzna');
-INSERT INTO `users` VALUES (57, '', '', NULL, '000-000-123', 'kobieta');
-INSERT INTO `users` VALUES (60, 'Xd', 'Xd', NULL, '123-456-789', 'mężczyzna');
-INSERT INTO `users` VALUES (64, 'Jan', 'Bąk', NULL, '123-456-789', 'mężczyzna');
-INSERT INTO `users` VALUES (66, 'Kamil', 'Bąk', '', '123-858-392', 'mężczyzna');
-INSERT INTO `users` VALUES (68, 'Monika', 'Ka', NULL, '123-456-789', 'mężczyzna');
-INSERT INTO `users` VALUES (70, 'Monika', 'Kociołek', '', '123-456-789', 'mężczyzna');
-INSERT INTO `users` VALUES (73, 'Rafał', 'Nicpoń', NULL, '123-456-789', 'mężczyzna');
-INSERT INTO `users` VALUES (75, 'Rafał', 'Kołdra', '', '123-456-789', 'mężczyzna');
-INSERT INTO `users` VALUES (76, 'Kamil', 'Kołdra', NULL, '123-456-789', 'mężczyzna');
-INSERT INTO `users` VALUES (77, 'Xd', 'Xd', NULL, '123-456-789', 'mężczyzna');
-INSERT INTO `users` VALUES (80, 'Rafał', 'Aaaaa', '', '123-456-789', 'mężczyzna');
-INSERT INTO `users` VALUES (81, 'Rafał', 'Bbbbbbbbb', '', '123-456-789', 'mężczyzna');
-INSERT INTO `users` VALUES (83, 'Cccc', 'Bbbbbbbbb', '', '123-456-789', 'mężczyzna');
-INSERT INTO `users` VALUES (85, 'Kamil', 'Dostawca1', NULL, '123-456-789', 'mężczyzna');
+INSERT INTO `users` VALUES (1, 'Piotr', 'Ciosmak', NULL, '000-000-123', '', 'kobieta');
+INSERT INTO `users` VALUES (2, 'Kamil', 'Dąbek', NULL, '000-000-000', '', 'mężczyzna');
+INSERT INTO `users` VALUES (3, 'Igor', 'Bobek', NULL, '632-849-361', '', 'mężczyzna');
+INSERT INTO `users` VALUES (4, 'Marcel', 'Czurczak', 'marceli223@gmail.com', '687-921-314', '', 'mężczyzna');
+INSERT INTO `users` VALUES (5, 'Mikołaj', 'Dobisz', NULL, '243-242-374', '', 'mężczyzna');
+INSERT INTO `users` VALUES (6, 'Anna', 'Bolec', NULL, '753-127-264', '', 'kobieta');
+INSERT INTO `users` VALUES (7, 'Karolina', 'Figala', NULL, '726-537-243', '', 'kobieta');
+INSERT INTO `users` VALUES (8, 'Jan', 'Kowalski', 'jankowalski2000@gmail.com', '463-245-325', '', 'mężczyzna');
+INSERT INTO `users` VALUES (9, 'Kacper', 'Solarski', 'kapi21@onet.pl', '672-642-483', '', 'mężczyzna');
+INSERT INTO `users` VALUES (10, 'Janusz', 'Wąs', NULL, '783-246-342', '', 'mężczyzna');
+INSERT INTO `users` VALUES (11, 'Janina', 'Bąk', NULL, '823-987-324', '', 'kobieta');
+INSERT INTO `users` VALUES (12, 'Olga', 'Brzoza', NULL, '791-365-843', '', 'kobieta');
+INSERT INTO `users` VALUES (13, 'Marcin', 'Wczesny', NULL, '987-321-754', '', 'mężczyzna');
+INSERT INTO `users` VALUES (14, 'Michał', 'Kozak', NULL, '753-874-362', '', 'mężczyzna');
+INSERT INTO `users` VALUES (15, 'Bartosz', 'Niedźwiedź', NULL, '764-382-645', '', 'mężczyzna');
+INSERT INTO `users` VALUES (16, 'Tadeusz', 'Śmiały', NULL, '654-361-237', '', 'mężczyzna');
+INSERT INTO `users` VALUES (17, 'Olga', 'Kos', NULL, '864-632-462', '', 'kobieta');
+INSERT INTO `users` VALUES (18, 'Mariola', 'Kosowska', NULL, '874-236-482', '', 'kobieta');
+INSERT INTO `users` VALUES (19, 'Zofia', 'Kwarc', NULL, '328-473-274', '', 'kobieta');
+INSERT INTO `users` VALUES (20, 'Arkadiusz', 'Kędra', NULL, '784-236-426', '', 'mężczyzna');
+INSERT INTO `users` VALUES (21, 'Wojciech', 'Kłos', NULL, '783-287-422', '', 'mężczyzna');
+INSERT INTO `users` VALUES (22, 'Karol', 'Chwieja', 'karolek@gmail.com', '546-384-527', '', 'mężczyzna');
+INSERT INTO `users` VALUES (23, 'Kazimierz', 'Bolec', 'bolcus2203@gmail.com', '678-326-432', '', 'mężczyzna');
+INSERT INTO `users` VALUES (24, 'Stanisław', 'Marzec', 'marcula2313@onet.pl', '267-493-621', '', 'mężczyzna');
+INSERT INTO `users` VALUES (25, 'Jan', 'Bąk', 'root@wp.pl', '776-428-342', '', 'mężczyzna');
+INSERT INTO `users` VALUES (26, 'Kornel', 'Januszek', 'root122@vp.pl', '853-821-743', '', 'mężczyzna');
+INSERT INTO `users` VALUES (27, 'Kamila', 'Poręcz', 'kamisia@vp.pl', '754-732-831', '', 'kobieta');
+INSERT INTO `users` VALUES (28, 'Piotr', 'Kordon', 'piotr@kordo.pl', '765-437-282', '', 'mężczyzna');
+INSERT INTO `users` VALUES (29, 'Kamil', 'Czepek', 'kamilo223@wp.pl', '123-456-789', '', 'mężczyzna');
+INSERT INTO `users` VALUES (30, 'Kamil', 'Dereń', 'kamil.deren.2001@gmail.com', '674-382-912', '', 'mężczyzna');
+INSERT INTO `users` VALUES (31, 'Patryk', 'Kolba', 'patryczekxd@gmail.com', '876-547-382', '', 'mężczyzna');
+INSERT INTO `users` VALUES (32, 'Karol', 'Chwieja', 'karolek2122@gmail.com', '678-392-643', '', 'mężczyzna');
+INSERT INTO `users` VALUES (34, 'Karol', 'Niezdara', 'kaorlek@gmail.com', '764-982-093', '', 'mężczyzna');
+INSERT INTO `users` VALUES (35, 'Olaf', 'Rabat', 'dasda@gmail.com', '123-456-789', '', 'mężczyzna');
+INSERT INTO `users` VALUES (45, 'Karol', 'Niedzielski', 'kaorlek@gmail.com', '746-362-812', '', 'mężczyzna');
+INSERT INTO `users` VALUES (46, 'Piotr', 'Parada', 'parada@gmail.com', '986-763-542', '', 'mężczyzna');
+INSERT INTO `users` VALUES (47, 'Czarek', 'Niedola', 'dolla@wp.pl', '984-095-673', '', 'mężczyzna');
+INSERT INTO `users` VALUES (48, 'Karol', 'Poniedziałek', 'koarolek203@gmail.com', '123-456-789', '', 'mężczyzna');
+INSERT INTO `users` VALUES (52, 'Karol', 'Gąska', 'karolek@gmail.com', '176-489-304', '', 'mężczyzna');
+INSERT INTO `users` VALUES (53, 'Kamil', 'Pasterniak', NULL, '738-493-173', '', 'mężczyzna');
+INSERT INTO `users` VALUES (54, 'Karol', 'Gąska', 'karolek@gmail.com', '176-489-304', '', 'mężczyzna');
+INSERT INTO `users` VALUES (55, 'Karol', 'Gąska', '', '176-489-304', '', 'mężczyzna');
+INSERT INTO `users` VALUES (56, 'Jan', 'Kowalski', NULL, '123-456-789', '', 'mężczyzna');
+INSERT INTO `users` VALUES (57, '', '', NULL, '000-000-123', '', 'kobieta');
+INSERT INTO `users` VALUES (60, 'Xd', 'Xd', NULL, '123-456-789', '', 'mężczyzna');
+INSERT INTO `users` VALUES (64, 'Jan', 'Bąk', NULL, '123-456-789', '', 'mężczyzna');
+INSERT INTO `users` VALUES (66, 'Kamil', 'Bąk', '', '123-858-392', '', 'mężczyzna');
+INSERT INTO `users` VALUES (68, 'Monika', 'Ka', NULL, '123-456-789', '', 'mężczyzna');
+INSERT INTO `users` VALUES (70, 'Monika', 'Kociołek', '', '123-456-789', '', 'mężczyzna');
+INSERT INTO `users` VALUES (73, 'Rafał', 'Nicpoń', NULL, '123-456-789', '', 'mężczyzna');
+INSERT INTO `users` VALUES (75, 'Rafał', 'Kołdra', '', '123-456-789', '', 'mężczyzna');
+INSERT INTO `users` VALUES (76, 'Kamil', 'Kołdra', NULL, '123-456-789', '', 'mężczyzna');
+INSERT INTO `users` VALUES (77, 'Xd', 'Xd', NULL, '123-456-789', '', 'mężczyzna');
+INSERT INTO `users` VALUES (80, 'Rafał', 'Aaaaa', '', '123-456-789', '', 'mężczyzna');
+INSERT INTO `users` VALUES (81, 'Rafał', 'Bbbbbbbbb', '', '123-456-789', '', 'mężczyzna');
+INSERT INTO `users` VALUES (83, 'Cccc', 'Bbbbbbbbb', '', '123-456-789', '', 'mężczyzna');
+INSERT INTO `users` VALUES (85, 'Kamil', 'Dostawca1', NULL, '123-456-789', '', 'mężczyzna');
+INSERT INTO `users` VALUES (86, 'Piotr', 'Ciosmak', NULL, '123123123', '+48', 'mężczyzna');
+INSERT INTO `users` VALUES (87, 'Igor', 'Bobek', NULL, '00112234125', '+99', 'mężczyzna');
+INSERT INTO `users` VALUES (101, 'Piotr', 'Ciosmak', 'pciosmak@gmail.com', '123123123', '+48', 'mężczyzna');
 
 -- ----------------------------
 -- Table structure for vehicles_types
@@ -830,7 +924,7 @@ INSERT INTO `users` VALUES (85, 'Kamil', 'Dostawca1', NULL, '123-456-789', 'mę�
 DROP TABLE IF EXISTS `vehicles_types`;
 CREATE TABLE `vehicles_types`  (
   `id_vehicle_type` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `vehicle_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `vehicle_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id_vehicle_type`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
@@ -842,6 +936,43 @@ INSERT INTO `vehicles_types` VALUES (2, 'skuter');
 INSERT INTO `vehicles_types` VALUES (3, 'samochód');
 INSERT INTO `vehicles_types` VALUES (4, 'na piechotę');
 INSERT INTO `vehicles_types` VALUES (5, 'hulajnoga');
+
+-- ----------------------------
+-- View structure for v_all_existed_pizzas
+-- ----------------------------
+DROP VIEW IF EXISTS `v_all_existed_pizzas`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_all_existed_pizzas` AS SELECT *, row_start, row_end FROM pizza FOR SYSTEM_TIME ALL ;
+
+-- ----------------------------
+-- View structure for v_all_existed_reviews
+-- ----------------------------
+DROP VIEW IF EXISTS `v_all_existed_reviews`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_all_existed_reviews` AS SELECT *, row_start, row_end FROM reviews FOR SYSTEM_TIME ALL ;
+
+-- ----------------------------
+-- View structure for v_number_of_adresses_in_cities
+-- ----------------------------
+DROP VIEW IF EXISTS `v_number_of_adresses_in_cities`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_number_of_adresses_in_cities` AS select count(0) AS `Liczba adresów z miasta`,`delivery_adresses`.`city` AS `city` from `delivery_adresses` group by `delivery_adresses`.`city` order by count(0) desc ;
+
+-- ----------------------------
+-- View structure for v_ordered_pizzas
+-- ----------------------------
+DROP VIEW IF EXISTS `v_ordered_pizzas`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_ordered_pizzas` AS SELECT u.first_name, u.last_name, da.city, p.pizza 
+FROM users u, delivery_adresses da, pizza p, orders o, ordered_pizzas op 
+WHERE u.id_user = da.id_customer AND u.id_user = o.id_customer AND op.id_order = o.id_order AND op.id_pizza = p.id_pizza AND u.id_user = o.id_customer AND o.id_delivery_adresses = da.id_delivery_adress ;
+
+-- ----------------------------
+-- View structure for v_reviews_amount
+-- ----------------------------
+DROP VIEW IF EXISTS `v_reviews_amount`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_reviews_amount` AS WITH review_info as
+(SELECT users.id_user, users.first_name, users.last_name, reviews.message, reviews.score 
+ FROM reviews JOIN orders ON orders.id_order = reviews.id_order JOIN customers ON customers.id_customer = orders.id_customer JOIN
+ users ON users.id_user = customers.id_user)
+ 
+ SELECT *, (SELECT COUNT(*) FROM review_info r2 WHERE r2.id_user = r.id_user) ile_recenzji FROM review_info r HAVING ile_recenzji > 1 ;
 
 -- ----------------------------
 -- Procedure structure for add_comment
@@ -1053,12 +1184,12 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `add_ingredient`;
 delimiter ;;
-CREATE PROCEDURE `add_ingredient`(IN `v_ingredient` varchar(255),IN `v_is_hot` tinyint,IN `v_price` double,IN `v_image` blob,IN `v_id_ingredient_type` int)
+CREATE PROCEDURE `add_ingredient`(IN `v_ingredient` varchar(255),IN `v_is_hot` tinyint,IN `v_price` double,IN `v_image` blob,IN `v_id_ingredient_type` int, IN `v_amount` int)
 BEGIN
 	START TRANSACTION;
 	
-	INSERT INTO ingredients(ingredient, is_hot, price, image, id_ingredient_type)
-	VALUES (v_ingredient, v_is_hot, v_price, v_image, v_id_ingredient_type);
+	INSERT INTO ingredients(ingredient, is_hot, price, image, id_ingredient_type, amount)
+	VALUES (v_ingredient, v_is_hot, v_price, v_image, v_id_ingredient_type, v_amount);
 	
 	COMMIT;
 END
@@ -1278,7 +1409,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `add_review`;
 delimiter ;;
-CREATE PROCEDURE `add_review`(IN `v_message` longtext,IN `v_score` int,IN `v_id_order` int, IN `v_image` longblob)
+CREATE PROCEDURE `add_review`(IN `v_message` longtext,IN `v_score` int,IN `v_id_order` int)
 BEGIN
 	START TRANSACTION;
 
@@ -1286,26 +1417,6 @@ BEGIN
 	
 	INSERT INTO reviews(message, score, id_order)
 	VALUES (v_message, v_score, v_id_order);
-	
-	INSERT INTO reviews_images(image, id_review)
-	VALUES (v_image, @new_id_review);
-	
-	COMMIT;
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Procedure structure for add_reviews_image
--- ----------------------------
-DROP PROCEDURE IF EXISTS `add_reviews_image`;
-delimiter ;;
-CREATE PROCEDURE `add_reviews_image`(IN `v_image` longblob, IN `v_id_review` int)
-BEGIN
-	START TRANSACTION;
-	
-	INSERT INTO reviews_images(image, id_review)
-	VALUES (v_image, v_id_review);
 	
 	COMMIT;
 END
@@ -1359,6 +1470,21 @@ BEGIN
 	VALUES (v_vehicle_type);
 	
 	COMMIT;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Function structure for calculate_payment
+-- ----------------------------
+DROP FUNCTION IF EXISTS `calculate_payment`;
+delimiter ;;
+CREATE FUNCTION `calculate_payment`(`minimal_gross` int)
+ RETURNS int(11)
+BEGIN
+	SET @ilosc_ludzi = (SELECT COUNT(*) FROM delivery_persons);
+
+	RETURN minimal_gross * @ilosc_ludzi;
 END
 ;;
 delimiter ;
@@ -1687,6 +1813,112 @@ CREATE PROCEDURE `do_manager`(IN v_id_user int)
 BEGIN
 	INSERT INTO managers(id_user)
 	VALUES (v_id_user);
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for show_matching_pizzas
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `show_matching_pizzas`;
+delimiter ;;
+CREATE PROCEDURE `show_matching_pizzas`(IN `v_word` varchar(255))
+BEGIN
+	
+	SET @new_word = CONCAT('+', v_word);
+	
+	SELECT * FROM pizza WHERE MATCH(pizza) AGAINST(@new_word IN BOOLEAN MODE);
+
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for show_not_matching_pizzas
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `show_not_matching_pizzas`;
+delimiter ;;
+CREATE PROCEDURE `show_not_matching_pizzas`(IN `v_word` varchar(255))
+BEGIN
+	
+	SET @new_word = CONCAT('+', v_word);
+	
+	SELECT * FROM pizza WHERE NOT MATCH(pizza) AGAINST(@new_word IN BOOLEAN MODE);
+
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for subtract_drinks
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `subtract_drinks`;
+delimiter ;;
+CREATE PROCEDURE `subtract_drinks`(IN `v_amount` int, IN `v_id_drink` int)
+BEGIN
+	START TRANSACTION;
+	SELECT @drink_amount := amount FROM drinks WHERE id_drink = v_id_drink FOR UPDATE;
+	SET @drink_amount := @drink_amount - v_amount;
+	
+	IF (@drink_amount < 0) THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Za mało składników!';
+	END IF;
+		
+	UPDATE drinks SET amount = @drink_amount WHERE id_drink = v_id_drink;
+		
+	COMMIT;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for subtract_ingredients
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `subtract_ingredients`;
+delimiter ;;
+CREATE PROCEDURE `subtract_ingredients`(IN `v_id_pizza` int, IN `v_quantity` int)
+BEGIN
+	START TRANSACTION;
+	
+	CREATE TEMPORARY TABLE temp_table SELECT * FROM pizzas_ingredients WHERE id_pizza = v_id_pizza FOR UPDATE;
+	WHILE ((SELECT COUNT(*) FROM temp_table) > 0) DO
+		SET @v_id_ingredient := (SELECT id_ingredient FROM temp_table LIMIT 1);
+		SET @amount = (SELECT amount FROM ingredients WHERE id_ingredient = @v_id_ingredient FOR UPDATE);
+		SET @amount = @amount - v_quantity;
+		IF (@amount < 0) THEN
+			DROP TABLE temp_table;
+			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Za mało składników!';
+		ELSE
+			UPDATE ingredients SET amount = @amount WHERE id_ingredient = @v_id_ingredient;
+			DELETE FROM temp_table WHERE id_ingredient = @v_id_ingredient;
+		END IF;
+END WHILE;
+
+	DROP TABLE temp_table;
+	
+	COMMIT;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for subtract_sauces
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `subtract_sauces`;
+delimiter ;;
+CREATE PROCEDURE `subtract_sauces`(IN `v_amount` int,IN `v_id_sauce` int)
+BEGIN
+	START TRANSACTION;
+	SELECT @sauce_amount := amount FROM sauces WHERE id_sauce = v_id_sauce FOR UPDATE;
+	SET @sauce_amount := @sauce_amount - v_amount;
+	
+	IF (@sauce_amount < 0) THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Za mało składników!';
+	END IF;
+	
+	UPDATE sauces SET amount = @sauce_amount WHERE id_sauce = v_id_sauce;
+	
+	COMMIT;
 END
 ;;
 delimiter ;
@@ -2225,6 +2457,22 @@ END
 delimiter ;
 
 -- ----------------------------
+-- Event structure for dostawa
+-- ----------------------------
+DROP EVENT IF EXISTS `dostawa`;
+delimiter ;;
+CREATE EVENT `dostawa`
+ON SCHEDULE
+EVERY '1' DAY STARTS '2022-06-09 21:15:30'
+DO BEGIN
+	UPDATE ingredients SET ingredients.amount = 100;
+	UPDATE sauces SET sauces.amount = 100;
+	UPDATE drinks SET drinks.amount = 100;
+END
+;;
+delimiter ;
+
+-- ----------------------------
 -- Triggers structure for table accounts
 -- ----------------------------
 DROP TRIGGER IF EXISTS `accountsLoginToLowerCaseI`;
@@ -2705,17 +2953,6 @@ delimiter ;
 -- ----------------------------
 -- Triggers structure for table users
 -- ----------------------------
-DROP TRIGGER IF EXISTS `usersFirst_nameCorrectI`;
-delimiter ;;
-CREATE TRIGGER `usersFirst_nameCorrectI` BEFORE INSERT ON `users` FOR EACH ROW BEGIN
-	SET new.first_name = CONCAT(UPPER(SUBSTR(new.first_name, 1, 1)),LOWER(SUBSTR(new.first_name, 2)));
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Triggers structure for table users
--- ----------------------------
 DROP TRIGGER IF EXISTS `usersLast_nameCorrectI`;
 delimiter ;;
 CREATE TRIGGER `usersLast_nameCorrectI` BEFORE INSERT ON `users` FOR EACH ROW BEGIN
@@ -2727,14 +2964,39 @@ delimiter ;
 -- ----------------------------
 -- Triggers structure for table users
 -- ----------------------------
-DROP TRIGGER IF EXISTS `usersPhone_numberCheckIfCorrectI`;
+DROP TRIGGER IF EXISTS `usersCodeCorrectI`;
 delimiter ;;
-CREATE TRIGGER `usersPhone_numberCheckIfCorrectI` BEFORE INSERT ON `users` FOR EACH ROW BEGIN
-	IF (LENGTH(new.phone_number) <=> 9) THEN
-		SET new.phone_number = CONCAT(SUBSTR(new.phone_number, 1, 3), '-', SUBSTR(new.phone_number, 4, 3), '-', SUBSTR(new.phone_number, 7));
-	ELSE
+CREATE TRIGGER `usersCodeCorrectI` BEFORE INSERT ON `users` FOR EACH ROW BEGIN
+	IF (new.code NOT REGEXP '[0-9]$') THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Niepoprawny numer kierunkowy!';
+	END IF;
+	IF (new.code NOT LIKE '+%') THEN
+		SET new.code = CONCAT('+', new.code);
+	END IF;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Triggers structure for table users
+-- ----------------------------
+DROP TRIGGER IF EXISTS `userPhone_numberCorrectI`;
+delimiter ;;
+CREATE TRIGGER `userPhone_numberCorrectI` BEFORE INSERT ON `users` FOR EACH ROW BEGIN
+	IF (new.phone_number NOT REGEXP '[0-9]$') THEN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Niepoprawny numer telefonu!';
 	END IF;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Triggers structure for table users
+-- ----------------------------
+DROP TRIGGER IF EXISTS `userFirst_nameCorrectI`;
+delimiter ;;
+CREATE TRIGGER `userFirst_nameCorrectI` BEFORE INSERT ON `users` FOR EACH ROW BEGIN
+	SET new.first_name = CONCAT(UPPER(SUBSTR(new.first_name, 1, 1)),LOWER(SUBSTR(new.first_name, 2)));
 END
 ;;
 delimiter ;
@@ -2779,12 +3041,26 @@ delimiter ;
 -- ----------------------------
 -- Triggers structure for table users
 -- ----------------------------
-DROP TRIGGER IF EXISTS `usersPhone_numberCheckIfCorrectU`;
+DROP TRIGGER IF EXISTS `userCodeCorrectU`;
 delimiter ;;
-CREATE TRIGGER `usersPhone_numberCheckIfCorrectU` BEFORE UPDATE ON `users` FOR EACH ROW BEGIN
-	IF (LENGTH(new.phone_number) <=> 9) THEN
-		SET new.phone_number = CONCAT(SUBSTR(new.phone_number, 1, 3), '-', SUBSTR(new.phone_number, 4, 3), '-', SUBSTR(new.phone_number, 7));
-	ELSE
+CREATE TRIGGER `userCodeCorrectU` BEFORE UPDATE ON `users` FOR EACH ROW BEGIN
+	IF (new.code NOT REGEXP '[0-9]$') THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Niepoprawny numer kierunkowy!';
+	END IF;
+	IF (new.code NOT LIKE '+%') THEN
+		SET new.code = CONCAT('+', new.code);
+	END IF;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Triggers structure for table users
+-- ----------------------------
+DROP TRIGGER IF EXISTS `userPhone_numberCorrectU`;
+delimiter ;;
+CREATE TRIGGER `userPhone_numberCorrectU` BEFORE UPDATE ON `users` FOR EACH ROW BEGIN
+	IF (new.phone_number NOT REGEXP '[0-9]$') THEN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Niepoprawny numer telefonu!';
 	END IF;
 END
