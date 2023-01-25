@@ -1,5 +1,0 @@
-******************************
-WERSJONOWANIE I PARTYCJONOWANIE BAZY zamówień
-WIDOKI DUŻO NP. LISTA KLIENTÓW Z JAKIEGOŚ MIASTA
-EVENTS do zamównień
-******************************
